@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0b1020">
+<title>干瞪眼 · 星际版</title>
+<link rel="icon" href="/logo.png">
+<link rel="apple-touch-icon" href="/logo.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div id="nebula"></div>
+
+<!-- ==================== 启动封面 ==================== -->
+<section class="screen" id="scr-splash">
+  <div class="splash-inner">
+    <img class="splash-logo" src="/logo.png" alt="堂堂游戏">
+    <div class="splash-brand">堂 堂 游 戏</div>
+  </div>
+</section>
+
+<!-- ==================== 登录页 ==================== -->
+<section class="screen" id="scr-login">
+  <div class="login-top-plaque"><img src="/logo.png" alt="">堂堂游戏</div>
+  <div class="wing-badge"><span class="wing-l"></span><i>星际版</i><span class="wing-r"></span></div>
+  <h1 class="game-title"><span>干</span><span class="t-mid">瞪</span><span>眼</span></h1>
+  <div class="title-laser"></div>
+  <div class="login-form">
+    <div class="sci-input"><label>用户名</label><input id="in-user" type="text" maxlength="12" placeholder="游客可留空" autocomplete="off"></div>
+    <div class="sci-input"><label>密码</label><input id="in-pass" type="password" maxlength="20" placeholder="选填"></div>
+    <button class="btn-play" id="btn-play"><i>Play</i></button>
+    <div class="login-tip">新用户名将自动注册 · 留空则以游客身份进入</div>
+  </div>
+</section>
+
+<!-- ==================== 加载条 ==================== -->
+<section class="screen" id="scr-loading">
+  <div class="loading-badge">
+    <span class="chev l"></span>
+    <div class="loading-core"><b>加载中</b><div class="load-bar"><i></i></div></div>
+    <span class="chev r"></span>
+  </div>
+</section>
+
+<!-- ==================== 首页 ==================== -->
+<section class="screen" id="scr-home">
+  <header class="topbar">
+    <button class="tb-item tb-exit" data-act="exit"><i class="tb-back"></i>退出</button>
+    <button class="tb-item" data-act="tutorial"><i class="ic">✋</i>新手指导</button>
+    <div class="tb-title">菜单</div>
+    <button class="tb-item" data-act="help"><i class="ic">📖</i>帮助</button>
+    <div class="tb-clock" id="home-clock">12:30</div>
+  </header>
+  <div class="home-modes">
+    <div class="mode-card" data-mode="practice">
+      <i class="mc-gem g1"></i>
+      <div class="mc-name cyan">练 习 场</div>
+      <div class="mc-fee">免费</div>
+    </div>
+    <div class="mode-card" data-mode="arena">
+      <i class="mc-gem g2"></i>
+      <div class="mc-name gold">竞 技 场</div>
+      <div class="mc-fee">每场5能量</div>
+    </div>
+    <div class="mode-card" data-mode="master">
+      <i class="mc-gem g3"></i>
+      <div class="mc-name magenta">大 师 场</div>
+      <div class="mc-fee">每场20能量</div>
+    </div>
+  </div>
+  <div class="home-user" id="home-user">
+    <span class="hu-avatar"></span>
+    <div class="hu-name">用户</div>
+    <div class="hu-energy"><i>⚡</i><b>0</b></div>
+  </div>
+  <div class="home-quick">
+    <button class="hq-btn" data-act="missions"><i>🛡️</i>接任务</button>
+    <button class="hq-btn" data-act="leaderboard"><i>⭐</i>英雄榜</button>
+  </div>
+</section>
+
+<!-- ==================== 等待连接 ==================== -->
+<section class="screen" id="scr-waiting">
+  <header class="topbar">
+    <button class="tb-item tb-exit" data-act="leave-room"><i class="tb-back"></i>退出</button>
+    <div class="tb-title">匹配中</div>
+    <div class="tb-clock" id="wait-clock">12:30</div>
+  </header>
+  <div class="wait-count" id="wait-count"><span>等待时间</span><b>20</b><i>秒</i></div>
+  <div class="wait-seats" id="wait-seats"></div>
+  <button class="btn-change-table" id="btn-change-table"><span>换桌</span></button>
+</section>
+
+<!-- ==================== 对战 ==================== -->
+<section class="screen" id="scr-battle">
+  <header class="topbar battle-bar">
+    <button class="tb-item tb-exit" data-act="leave-battle"><i class="tb-back"></i>退出</button>
+    <div class="bb-info">剩余牌：<b id="bb-deck">24</b></div>
+    <button class="tb-item" data-act="menu"><i class="ic">☰</i>菜单</button>
+    <div class="bb-info">赔率：<b id="bb-mult">10</b></div>
+    <div class="tb-clock" id="battle-clock">12:30</div>
+  </header>
+
+  <div class="battle-main">
+    <div class="opponents" id="opponents"></div>
+    <div class="table-center" id="table-center">
+      <div class="pile-area" id="pile-area"></div>
+      <div class="bomb-fx" id="bomb-fx"></div>
+    </div>
+  </div>
+
+  <div class="counter-panel" id="counter-panel"></div>
+
+  <div class="action-bar" id="action-bar">
+    <button class="act-btn act-pass" id="btn-pass">不出</button>
+    <div class="turn-timer" id="turn-timer">
+      <svg viewBox="0 0 72 72"><circle class="tt-bg" cx="36" cy="36" r="30"/><circle class="tt-fg" cx="36" cy="36" r="30" id="tt-arc"/></svg>
+      <b id="tt-num">30</b>
+    </div>
+    <button class="act-btn act-hint" id="btn-hint">提示</button>
+    <button class="act-btn act-clear" id="btn-clear">重选</button>
+    <button class="act-btn act-play" id="btn-play-cards">出牌</button>
+  </div>
+
+  <div class="hand-area" id="hand-area"></div>
+  <div class="self-dealer" id="self-dealer">压</div>
+  <div class="deal-tip" id="deal-tip"></div>
+</section>
+
+<!-- 弹窗容器 -->
+<div id="modal-root"></div>
+<div id="toast-wrap"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/game-shared.js"></script>
+<script src="/js/sound.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

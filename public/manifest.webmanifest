@@ -1,0 +1,15 @@
+{
+  "name": "干瞪眼 · 星际版",
+  "short_name": "干瞪眼",
+  "description": "堂堂游戏 · 干瞪眼星际版 — 联网与人机对战的扑克游戏",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
+  "icons": [
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

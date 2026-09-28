@@ -1,0 +1,15 @@
+{
+  "name": "gandengyan",
+  "version": "1.0.0",
+  "description": "干瞪眼 · 星际版 — Web 版卡牌游戏（联网对战 + 电脑对战）",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/engine.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}
